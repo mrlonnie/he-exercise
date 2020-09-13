@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Table,
   TableBody,
@@ -10,14 +10,45 @@ import {
 } from "react-router-dom";
 import PropTypes from 'prop-types';
 import ResultsTableHead from './ResultsTableHead'
+import LanguageFilter from './LanguageFilter'
 const SearchResults = ({
   results
-
 }) => {
   const [orderByProperty, setOrderByProperty] = useState('id');
   const [order, setOrder] = useState('asc');
-  const [filterLanguage, setFilterLanguage] = useState('');
-  const [languages, setLanguages] = useState('');
+  const [filterByLanguage, setFilterByLanguage] = useState('');
+  const [filteredResults, setFilteredResults] = useState([]);
+
+
+  useEffect(() => {
+    setFilteredResults(results);
+  }, [results]);
+  
+/**
+  * handleFilter
+  @param e event
+  @param language language to filter by
+ */
+  const handleFilterLanguage = (e, language) => {
+    console.log(language)
+    setFilterByLanguage(language);
+    let newResults = results.filter(row =>{ 
+      return row.language === language
+    })
+    
+    setFilteredResults(newResults);
+  };
+
+/**
+  * handleClearFilter
+  @param e event
+  @param language language to filter by
+ */
+  const handleClearFilter = () => {
+    setFilterByLanguage('');
+    let newResults = results;
+    setFilteredResults(newResults);
+  };
 
 /**
   * handleSort
@@ -82,19 +113,22 @@ const SearchResults = ({
   return (
     <div>
       { !!results.length &&
-      <div>
-        filter here
-      </div>  
+        <LanguageFilter
+          results={results}
+          filterByLanguage={filterByLanguage}
+          handleFilterLanguage={handleFilterLanguage}
+          handleClearFilter={handleClearFilter}
+        />
       }  
-      <Table>
+      <Table id="search-results">
       <ResultsTableHead
         order={order}
         orderByProperty={orderByProperty}
         handleTableHeadSort={handleTableHeadSort}
       />
       <TableBody>   
-        { !!results.length ?
-          sortThings(results, compareDirection(order, orderByProperty))
+        { !!filteredResults.length ?
+          sortThings(filteredResults, compareDirection(order, orderByProperty))
           .map((row, index) => {
             return (
             <TableRow key={`${row.id}`}>

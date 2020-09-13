@@ -35,34 +35,24 @@ const SearchForm = ({
           params: {
             q: searchTerm
           }
-        }
-        );
+        });
         setResults(result.data.items);
       }
       getRepositories()
    
     } catch (error) {
-      console.log(error);
+      setHasErrors(true)
+      setErrorMessages('There was an error')
     }
-  }, [searchTerm, setResults]);
+  }, [setResults]);
 
 
   const handleSearchTermChange = (e) => {
     setSearchTerm(e.target.value)
   }
 
-
-  const validateInputs = (e) => {
-    setHasErrors(false);
-    return true;
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!validateInputs()) {
-      return;
-    }
-    console.log('submitting');
     axios.get(API.searchRepositories,
       {
         params: {
@@ -70,8 +60,10 @@ const SearchForm = ({
         }
       }
     ).then(resp => {
-      console.log(resp)
       setResults(resp.data.items)
+    }).catch(error => {
+      setHasErrors(true)
+      setErrorMessages(['Search criteria must be alphanumeric'])
     }); 
   }
 
@@ -91,11 +83,7 @@ const SearchForm = ({
           <Button className={classes.formItem} type="submit" variant="contained" color="primary">Submit</Button>
       </form>
       { hasErrors && 
-        errorMessages.map((error) => {
-          return (
-            <Box color="error.main" key={error}>{error}</Box>
-          )
-        })
+        <Box color="error.main" >{errorMessages}</Box>
       }
     </div>
     

@@ -41,8 +41,10 @@ const RepoDetails = () => {
             repo: repo,
             owner: owner
           }
-        }
-        );
+        })
+        .catch(error => {
+          console.log(error)
+        });
         setRepoDetails(result.data);
       }
       getRepository()

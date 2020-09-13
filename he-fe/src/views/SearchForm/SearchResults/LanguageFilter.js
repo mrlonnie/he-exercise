@@ -1,30 +1,81 @@
 import React from 'react';
 import {
+  Button,
+  Card,
   MenuItem,
-  Select
+  Select,
+  makeStyles,
 } from '@material-ui/core'
 import PropTypes from 'prop-types';
 
+
 const LanguageFilter = ({
-  languages,
-  selectedLanguage
+  results,
+  filterByLanguage,
+  handleFilterLanguage,
+  handleClearFilter
 }) => {
+  
+  const classes = useStyles();
+
+  //Create new Set of available languages
+  const languages = [...new Set(results.map(row => row.language))]
+
+  const handleLanguageChange = (language) => (e) => {
+    handleFilterLanguage(e, language);
+  };
 
   return (
-    <Select
-      labelId="Language Filter"
-      id="language-filter"
-      value={selectedLanguage}
-      onChange={handleLanguageChange}
-    >
-    </Select>
+    <Card className={classes.card}>
+      <span>Language Filter: </span>
+      <Select
+        labelId="Language Filter"
+        id="language-filter"
+        value={filterByLanguage}
+        onChange={handleLanguageChange}
+      >
+        {!!languages.length && languages.map((language) => {
+              return (
+              <MenuItem
+                key={language}
+                value={language}
+                onClick={handleLanguageChange(language)}
+              >
+                {language}
+              </MenuItem>
+              )
+            })}
+        
+      </Select>
+      {
+        !!filterByLanguage &&
+        <Button
+          className={classes.clear}
+          variant="contained"
+          color="secondary"
+          onClick={handleClearFilter}
+        >
+          Clear Filter
+        </Button>
+      }
+    </Card>
   );
 }
 
 LanguageFilter.propTypes = {
-  selectedLanguage: PropTypes.string,
-  languages: PropTypes.array,
-  handleLanguageChange: PropTypes.func.isRequired,
+  filterByLanguage: PropTypes.string,
+  handleFilterLanguage: PropTypes.func.isRequired,
+  handleClearFilter: PropTypes.func.isRequired,
 };
 
-export default ResultsTableHead;
+const useStyles = makeStyles({
+  card: {
+    padding: '1rem',
+  },
+  clear: {
+    margin: '0 0 0 1rem'
+  }
+});
+
+
+export default LanguageFilter;

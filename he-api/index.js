@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
+const Joi = require('@hapi/joi');
 const {
     searchRepositories,
     getRepository,
@@ -13,10 +14,12 @@ const init = async () => {
         routes: {
         cors: {
             origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with', 'X_AUTH_TOKEN']   
+            additionalHeaders: ['x-requested-with', 'X_AUTH_TOKEN']   
             }
         }
     });
+
+    
     server.route({
         method: 'GET',
         path: '/searchRepositories',
@@ -24,6 +27,17 @@ const init = async () => {
             console.log(request.query)
             return searchRepositories(request.query.q);
         },
+        options: {
+            cache: {
+                expiresIn: 30 * 1000,
+                privacy: 'private'
+            },
+            validate: {
+              query: Joi.object({
+                  q: Joi.string().alphanum()
+              })
+            }
+        }
     });
     server.route({
         method: 'GET',
@@ -32,6 +46,18 @@ const init = async () => {
             console.log(request.query);
             return getRepository(request.query);
         },
+        options: {
+            cache: {
+                expiresIn: 30 * 1000,
+                privacy: 'private'
+            },
+            validate: {
+              query: Joi.object({
+                  owner: Joi.string(),
+                  repo: Joi.string(),
+              })
+            }
+        }
     });
 
     await server.register({
