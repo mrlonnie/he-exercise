@@ -7,9 +7,6 @@ exports.searchRepositories = async (q) => {
     const resp = await axios.get('https://api.github.com/search/repositories', {
       params: {
         q: q
-      },
-      headers: {
-        'Authorization': `token ${token}` 
       }
     })
     return resp.data
@@ -21,11 +18,7 @@ exports.getRepository = async (query) => {
   const owner = query.owner;
   const repo = query.repo;
   try {
-    const resp = await axios.get(`https://api.github.com/repos/${owner}/${repo}`, {
-      headers: {
-        'Authorization': `token ${token}` 
-      }
-    })
+    const resp = await axios.get(`https://api.github.com/repos/${owner}/${repo}`)
     console.log(resp.data)
     return resp.data
   } catch (error) {
