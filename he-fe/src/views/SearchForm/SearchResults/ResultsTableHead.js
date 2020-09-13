@@ -41,11 +41,6 @@ const ResultsTableHead = ({
               onClick={createSortHandler(headerCell.id)}
             >
               {headerCell.label}
-              {orderByProperty === headerCell.id ? (
-                <span>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
             </TableSortLabel>
           </TableCell>
             )
