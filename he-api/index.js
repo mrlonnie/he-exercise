@@ -3,42 +3,35 @@
 const Hapi = require('@hapi/hapi');
 const {
     searchRepositories,
+    getRepository,
 } = require('./src/controllers/github')
 
 const init = async () => {
     const server = Hapi.server({
         port: 3001,
-        host: 'localhost'
+        host: 'localhost',
+        routes: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with', 'X_AUTH_TOKEN']   
+            }
+        }
     });
-    
     server.route({
         method: 'GET',
         path: '/searchRepositories',
         handler: (request, h) => {
-            console.log(request.params)
             console.log(request.query)
             return searchRepositories(request.query.q);
         },
-        config: {
-            cors: {
-                origin: ['*'],
-                additionalHeaders: ['cache-control', 'x-requested-with', 'X_AUTH_TOKEN']
-            }
-        }
     });
     server.route({
         method: 'GET',
-        path: '/getRepository/{owner}/{repo}',
+        path: '/getRepository',
         handler: (request, h) => {
-            console.log(request.params);
-            return searchRepositories(request.params);
+            console.log(request.query);
+            return getRepository(request.query);
         },
-        config: {
-            cors: {
-                origin: ['*'],
-                additionalHeaders: ['cache-control', 'x-requested-with', 'X_AUTH_TOKEN']
-            }
-        }
     });
 
     await server.register({

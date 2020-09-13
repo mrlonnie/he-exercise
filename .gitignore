@@ -2,7 +2,8 @@
 
 # dependencies
 /node_modules
-
+he-api/node_modules/
+he-fe/node_modules/
 /.pnp
 .pnp.js
 

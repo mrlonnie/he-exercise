@@ -1,11 +1,15 @@
 'use strict';
 const axios = require('axios')
+const token = '44284283e0ffe8f88e26a255f3b8692cfd232cec';
 
 exports.searchRepositories = async (q) => {
   try {
     const resp = await axios.get('https://api.github.com/search/repositories', {
       params: {
         q: q
+      },
+      headers: {
+        'Authorization': `token ${token}` 
       }
     })
     return resp.data
@@ -13,16 +17,16 @@ exports.searchRepositories = async (q) => {
     console.error(error)
   }
 }
-exports.getRepository = async (params) => {
-  const owner = params.owner;
-  const repo = params.repo;
+exports.getRepository = async (query) => {
+  const owner = query.owner;
+  const repo = query.repo;
   try {
-    const resp = await axios.get('https://api.github.com/repos',{
-      params: {
-        owner: owner,
-        repo: repo
+    const resp = await axios.get(`https://api.github.com/repos/${owner}/${repo}`, {
+      headers: {
+        'Authorization': `token ${token}` 
       }
     })
+    console.log(resp.data)
     return resp.data
   } catch (error) {
     console.error(error)

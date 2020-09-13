@@ -4,8 +4,10 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Link
 } from '@material-ui/core'
+import {
+  Link,
+} from "react-router-dom";
 import PropTypes from 'prop-types';
 import ResultsTableHead from './ResultsTableHead'
 const SearchResults = ({
@@ -33,10 +35,10 @@ const SearchResults = ({
   @param results [Items to be sorted]
   @param comparator Function to determine which direction to sort
  */
-  const sortThings = (results, comparator) => {
+  const sortThings = (results, compare) => {
     const items = results.map((e, index) => [e, index]);
     items.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
+      const order = compare(a[0], b[0]);
       if (order !== 0) return order;
       return a[1] - b[1];
     });
@@ -44,11 +46,11 @@ const SearchResults = ({
   }
 
 /**
-  * getComparions
+  * compareDirection
   * @param order direction to sort ['asc', 'desc']
   * @param orderByProperty property to sort by
  */
-  const getComparisons = (order, orderByProperty) => {
+  const compareDirection = (order, orderByProperty) => {
     return order === "desc"
       ? (a, b) => compareThings(a, b, orderByProperty)
       : (a, b) => -compareThings(a, b, orderByProperty);
@@ -62,9 +64,9 @@ const SearchResults = ({
  */
   const compareThings = (a, b, orderByProperty) => {
     // Normalize Strings to lowercase so it doesnt separate capitalized and non-capitalized 
-    let itemA = typeof a[orderByProperty] == 'string'
+    let itemA = typeof a[orderByProperty] === 'string'
       ? a[orderByProperty].toLowerCase() : a[orderByProperty];
-    let itemB = typeof b[orderByProperty] == 'string'
+    let itemB = typeof b[orderByProperty] === 'string'
       ? b[orderByProperty].toLowerCase() : b[orderByProperty];
 
     if (itemB < itemA) {
@@ -92,7 +94,7 @@ const SearchResults = ({
       />
       <TableBody>   
         { !!results.length ?
-          sortThings(results, getComparisons(order, orderByProperty))
+          sortThings(results, compareDirection(order, orderByProperty))
           .map((row, index) => {
             return (
             <TableRow key={`${row.id}`}>
@@ -101,7 +103,7 @@ const SearchResults = ({
               <TableCell>{row.stargazers_count} </TableCell>
               <TableCell>{row.score}</TableCell>
               <TableCell>{row.language} </TableCell>
-              <TableCell><Link>{`http://www.github.com/${row.full_name}`}</Link> </TableCell>
+              <TableCell><Link to={`/${row.owner.login}/${row.name}`}>Details</Link> </TableCell>
             </TableRow>
             )
           }) 
@@ -121,7 +123,7 @@ const SearchResults = ({
 
 SearchResults.propTypes = {
   results: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     owner: PropTypes.shape({
       login: PropTypes.string

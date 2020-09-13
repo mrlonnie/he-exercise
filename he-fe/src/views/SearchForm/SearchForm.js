@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import {
+  Breadcrumbs,
   Button,
   Box,
   makeStyles,
   TextField,
+  Typography,
 } from '@material-ui/core';
-import API from '../data/api';
+import API from '../../data/api';
 
 const useStyles = makeStyles((theme) => ({
   formItem: {
@@ -20,7 +22,7 @@ const SearchForm = ({
   setResults
 }) => {
   const classes = useStyles();
-  const [searchTerm, setSearchTerm] = useState('hotelengine');
+  const [searchTerm, setSearchTerm] = useState('tetris');
   const [errorMessages, setErrorMessages] = useState('');
   const [hasErrors, setHasErrors] = useState(false);
 
@@ -60,7 +62,7 @@ const SearchForm = ({
     if(!validateInputs()) {
       return;
     }
-    console.log('submitting')
+    console.log('submitting');
     axios.get(API.searchRepositories,
       {
         params: {
@@ -75,6 +77,9 @@ const SearchForm = ({
 
   return (
     <div>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Typography color="textPrimary">Search Form</Typography>
+      </Breadcrumbs>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <TextField
           required

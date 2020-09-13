@@ -17,7 +17,6 @@ const LanguageFilter = ({
       value={selectedLanguage}
       onChange={handleLanguageChange}
     >
-      
     </Select>
   );
 }
