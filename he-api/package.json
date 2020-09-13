@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@hapi/hapi": "^20.0.0",
+    "@hapi/inert": "^6.0.2",
+    "@hapi/joi": "^17.1.1",
+    "axios": "^0.20.0",
+    "nodemon": "^2.0.4"
+  },
+  "name": "he-api",
+  "version": "1.0.0",
+  "description": "Hotel Engine API Exercise",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lonnie moy",
+  "license": "ISC"
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "COUNTRY": "Mexico",
+    "COMMODITY": "mango",
+    "FIXED_OVERHEAD": 32.00,
+    "VARIABLE_COST": 1.24
+  },
+  {
+    "COUNTRY": "Brazil",
+    "COMMODITY": "mango",
+    "FIXED_OVERHEAD": 20.00,
+    "VARIABLE_COST": 1.42
+  },
+  {
+    "COUNTRY": "China",
+    "COMMODITY": "mango",
+    "FIXED_OVERHEAD": 16.00,
+    "VARIABLE_COST": 1.35
+  },
+  {
+    "COUNTRY": "Mexico",
+    "COMMODITY": "avacado",
+    "FIXED_OVERHEAD": 32.00,
+    "VARIABLE_COST": 2.24
+  },
+  {
+    "COUNTRY": "Brazil",
+    "COMMODITY": "avacado",
+    "FIXED_OVERHEAD": 30.00,
+    "VARIABLE_COST": 5.42
+  },
+  {
+    "COUNTRY": "China",
+    "COMMODITY": "avacado",
+    "FIXED_OVERHEAD": 12.00,
+    "VARIABLE_COST": 1.65
+  },
+  {
+    "COUNTRY": "Mexico",
+    "COMMODITY": "watermelon",
+    "FIXED_OVERHEAD": 22.00,
+    "VARIABLE_COST": 1.44
+  },
+  {
+    "COUNTRY": "Brazil",
+    "COMMODITY": "watermelon",
+    "FIXED_OVERHEAD": 26.00,
+    "VARIABLE_COST": 1.82
+  },
+  {
+    "COUNTRY": "China",
+    "COMMODITY": "watermelon",
+    "FIXED_OVERHEAD": 13.00,
+    "VARIABLE_COST": 1.39
+  }
+]
