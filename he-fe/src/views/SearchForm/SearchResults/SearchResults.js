@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types';
 import ResultsTableHead from './ResultsTableHead'
 import LanguageFilter from './LanguageFilter'
+
 const SearchResults = ({
   results
 }) => {
@@ -18,7 +19,6 @@ const SearchResults = ({
   const [order, setOrder] = useState('asc');
   const [filterByLanguage, setFilterByLanguage] = useState('');
   const [filteredResults, setFilteredResults] = useState([]);
-
 
   useEffect(() => {
     setFilteredResults(results);
@@ -163,7 +163,8 @@ SearchResults.propTypes = {
       login: PropTypes.string
     }),
     language: PropTypes.string,
-    full_name: PropTypes.string
+    stargazers_count: PropTypes.number,
+    score: PropTypes.number
   })).isRequired,
 }
 export default SearchResults;

@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import {
   Link as RouterLink,
+  useParams
 } from "react-router-dom";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -22,16 +23,15 @@ import StarIcon from '@material-ui/icons/Star';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 import InfoIcon from '@material-ui/icons/Info';
-
-import {
-  useParams
-} from "react-router-dom";
 import API from '../../data/api';
 
 const RepoDetails = () => {
   const [repoDetails, setRepoDetails] = useState({});
   const [activeAccordion, setActiveAccordion] = useState('brief');
+
+  // Grab url params
   let { repo, owner } = useParams();
+
   useEffect(() => {
     try {
       async function getRepository() {
@@ -54,19 +54,30 @@ const RepoDetails = () => {
     }
   }, [repo, owner]);
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
+  /**
+   * ListItemLink
+   * @param props 
+   */
+  const ListItemLink = (props) => {
+    return <ListItem button component="a" {...props} />;
+  }
 
-const handleSetAccordion = (panel) => (event, newExpanded) => {
+  /**
+   * handleSetAccordion 
+   * @param panel Panel to make expanded
+   */
+
+  const handleSetAccordion = (panel) => (event, newExpanded) => {
     setActiveAccordion(newExpanded ? panel : false);
   };
 
+  /**
+   * generateDetails 
+   */
   const generateDetails = () => {
     return(
       <div><pre>{JSON.stringify(repoDetails, null, 2) }</pre></div>
     )
-    
   }
 
   return (
@@ -87,6 +98,7 @@ const handleSetAccordion = (panel) => (event, newExpanded) => {
         </AccordionSummary>
         <AccordionDetails>
             <List>
+              {/* Detail Row - Repo Name | Owner Avatar | Owner Name */}
               <ListItemLink href={repoDetails.html_url}>
                 <ListItemIcon>
                   <GitHubIcon />
@@ -97,6 +109,7 @@ const handleSetAccordion = (panel) => (event, newExpanded) => {
                 </ListItemIcon>
                 <ListItemText primary={repoDetails.owner &&repoDetails.owner.login} />
               </ListItemLink>
+              {/* Detail Row - Waters | Stars | Forks | Isses */}
               <ListItem>
                 <ListItemIcon>
                   <VisibilityIcon />
@@ -115,19 +128,22 @@ const handleSetAccordion = (panel) => (event, newExpanded) => {
                 </ListItemIcon>
                 <ListItemText primary={repoDetails.open_issues} />
               </ListItem>
-
+              {/* Detail Row - Description */}
               {
                  repoDetails.description &&
                  <ListItem>
                   Description: {repoDetails.description}
                 </ListItem>
                }
+               {/* Detail Row - Language */}
               {
                  repoDetails.language &&
                  <ListItem>
                   Language: {repoDetails.language}
                 </ListItem>
                }
+
+               {/* Detail Row - URL | Clone URL | SSH URL */}
                <ListItemLink href={repoDetails.html_url}>
                   Link: {repoDetails.html_url}
                 </ListItemLink>
@@ -138,8 +154,6 @@ const handleSetAccordion = (panel) => (event, newExpanded) => {
                   SSH URL: {repoDetails.ssh_url}
                 </ListItemLink>
             </List>
-
-          
         </AccordionDetails>
       </Accordion>
 

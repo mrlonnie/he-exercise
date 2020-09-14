@@ -63,6 +63,9 @@ const LanguageFilter = ({
 }
 
 LanguageFilter.propTypes = {
+  results: PropTypes.arrayOf(PropTypes.shape({
+    language: PropTypes.string.isRequired,
+  })),
   filterByLanguage: PropTypes.string,
   handleFilterLanguage: PropTypes.func.isRequired,
   handleClearFilter: PropTypes.func.isRequired,
