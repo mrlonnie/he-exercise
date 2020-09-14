@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Avatar,
   Breadcrumbs,
   Container,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Avatar,
   List,
   ListItem,
   ListItemIcon,

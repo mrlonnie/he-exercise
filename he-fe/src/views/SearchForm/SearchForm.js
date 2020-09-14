@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import {
+  Box,
   Breadcrumbs,
   Button,
-  Box,
-  makeStyles,
   TextField,
   Typography,
+  makeStyles,
 } from '@material-ui/core';
 import API from '../../data/api';
 
@@ -25,7 +25,6 @@ const SearchForm = ({
   const [searchTerm, setSearchTerm] = useState('tetris');
   const [errorMessages, setErrorMessages] = useState('');
   const [hasErrors, setHasErrors] = useState(false);
-
 
   useEffect(() => {
     try {
@@ -60,6 +59,7 @@ const SearchForm = ({
         }
       }
     ).then(resp => {
+      setHasErrors(false)
       setResults(resp.data.items)
     }).catch(error => {
       setHasErrors(true)
@@ -80,7 +80,14 @@ const SearchForm = ({
           label="Search Term"
           value={searchTerm}
           onChange={handleSearchTermChange}/>
-          <Button className={classes.formItem} type="submit" variant="contained" color="primary">Submit</Button>
+          <Button
+            className={classes.formItem}
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Submit
+          </Button>
       </form>
       { hasErrors && 
         <Box color="error.main" >{errorMessages}</Box>
