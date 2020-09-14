@@ -81,7 +81,7 @@ const RepoDetails = () => {
         onChange={handleSetAccordion('brief')}
       >
         <AccordionSummary>
-          Repo Details - Brief
+          General Details
         </AccordionSummary>
         <AccordionDetails>
           <GeneralDetailsList repoDetails={repoDetails} />
